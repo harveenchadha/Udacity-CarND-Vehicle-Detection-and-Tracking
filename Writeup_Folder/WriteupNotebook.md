@@ -382,7 +382,7 @@ There were a number of false positives that were detected  by the classifier whe
 
 **Answer**:
 
-Here's a [link to my video result](./project_video_output.mp4)
+Here's a [link to my video result](../project_video_output.mp4)
 
 
 #### Question 2- Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -458,9 +458,9 @@ class KeepTrack():
 
 5: **I earlier talked about frame skipping strategy. What I did was to take a random number between 0 and 1, if the value of number taken was less than 0.4 then I skipped the frame and took the refined windows from the previous stored frames. This decreased the processing time of my pipeline as well.** I was able to create a video from 4 hours to 4 minutes using all the methods above.
 
- Here's a [link to the video result](./project_video_output_with_frame_skipping.mp4)
+ Here's a [link to the video result](../project_video_output_with_frame_skipping.mp4)
  
- Here's another [link to the video result](./project_video_output_with_frame_skipping_threshold_20.mp4)
+ Here's another [link to the video result](../project_video_output_with_frame_skipping_threshold_20.mp4)
  
 
 
