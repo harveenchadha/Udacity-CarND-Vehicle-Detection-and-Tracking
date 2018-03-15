@@ -22,16 +22,10 @@ The goals / steps of this project are the following:
 
 1: First of All I loaded all the images from vehicle and non vehicle dataset provided in the project links.
 
-
-
-```python
-
-```
-
     Shape of Vehicle Image(64, 64, 3)
     Shape of Non Vehicle Image(64, 64, 3)
   
-![png](output_3_1.png)
+![png](./Writeup_Folder/output_3_1.png)
 
 
 2: The code for extracting the hog features is mentioned in the function ```GetFeaturesFromHog```. This function returns two things (hog_features, hog_image) if visualisation is set to true else this function returns only hog_features. 
@@ -64,7 +58,7 @@ def GetFeaturesFromHog(image,orient,cellsPerBlock,pixelsPerCell, visualise= Fals
     
 
 
-![png](output_6_1.png)
+![png](./Writeup_Folder/output_6_1.png)
 
 
 3: The HOG function expects a single channel image. So I defined a method ```ExtractFeatures``` which calls the function ```GetFeaturesFromHog``` and stacks all the features returned from different color channels
@@ -262,7 +256,7 @@ def DrawCars(image,windows, converColorspace=False):
 
     Total No of windows are  470
    
-![png](output_27_2.png)
+![png](./Writeup_Folder/output_27_2.png)
 
 
 Once I was able to detect the car by using Sliding Window approach. The next I decided to use a heatup to plot the final bounding boxes around the car. I defined a function ```add_heat``` that increments the pixel value of an black image the size of the original image at the location of each detected window which I call as refined Window.
@@ -311,7 +305,7 @@ def draw_labeled_bboxes(img, labels):
 
      Number of Cars found -  1
   
-![png](output_34_2.png)
+![png](./Writeup_Folder/output_34_2.png)
 
 
 **Question 2: Show some examples of test images to demonstrate how your pipeline is working. What did you do to optimize the performance of your classifier?**
@@ -329,7 +323,7 @@ ii) ```PiplineImage``` -> This pipeline is for the processing of test images. He
 Running the pipeline for test images gives the result as follows-:
 
 
-![png](output_37_1.png)
+![png](./Writeup_Folder/output_37_1.png)
 
 
 The final implentation worked well as it is clear from the test images. Nearly in all the images the cars were detected with ease. I decided to run the code then on video Pipeline.
