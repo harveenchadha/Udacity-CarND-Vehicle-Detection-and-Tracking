@@ -1,18 +1,3 @@
-Project 5, Term 1
---
-**Vehicle Detection Project**
-
-The goals / steps of this project are the following:
-
-* Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier
-* Optionally, you can also apply a color transform and append binned color features, as well as histograms of color, to your HOG feature vector. 
-* Note: for those first two steps don't forget to normalize your features and randomize a selection for training and testing.
-* Implement a sliding-window technique and use your trained classifier to search for vehicles in images.
-* Run your pipeline on a video stream (start with the test_video.mp4 and later implement on full project_video.mp4) and create a heat map of recurring detections frame by frame to reject outliers and follow detected vehicles.
-* Estimate a bounding box for vehicles detected.
-
----
-
 
 ### Histogram of Oriented Gradients (HOG)
 
@@ -22,10 +7,18 @@ The goals / steps of this project are the following:
 
 1: First of All I loaded all the images from vehicle and non vehicle dataset provided in the project links.
 
+
+
+```python
+
+```
+
     Shape of Vehicle Image(64, 64, 3)
     Shape of Non Vehicle Image(64, 64, 3)
-  
-![png](./Writeup_Folder/output_3_1.png)
+    
+
+
+![png](output_3_1.png)
 
 
 2: The code for extracting the hog features is mentioned in the function ```GetFeaturesFromHog```. This function returns two things (hog_features, hog_image) if visualisation is set to true else this function returns only hog_features. 
@@ -35,6 +28,9 @@ The goals / steps of this project are the following:
 > No of hog_features != len(hog_image.ravel())
 
 This is so because internally HOG optimizes the features vector before returing them, reducing the redundant data but image.ravel() basically stacks all the pixels together.
+
+
+
 
 ```python
 
@@ -53,12 +49,17 @@ def GetFeaturesFromHog(image,orient,cellsPerBlock,pixelsPerCell, visualise= Fals
         return hog_features
 ```
 
+
+```python
+
+```
+
     Feature Vector Length Returned is  1764
     No of features that can be extracted from image  4096
     
 
 
-![png](./Writeup_Folder/output_6_1.png)
+![png](output_6_1.png)
 
 
 3: The HOG function expects a single channel image. So I defined a method ```ExtractFeatures``` which calls the function ```GetFeaturesFromHog``` and stacks all the features returned from different color channels
@@ -130,6 +131,8 @@ labelList= np.concatenate([np.ones(len(vehicleFeatures)), np.zeros(len(nonVehicl
 After stacking all the features extracted from vehicle and non vehicle dataset, the next part is to train the classifier. **I decided to use only HOG features and neither spatial bins nor color histograms were used to extract features**. But before training there are a lot of data preprocessing steps that were performed-
 
 1: Splitting of Data into Training and Test Set- Data was splitted into training and test set to combact overfitting and test our model on test set. Also before splitting it was made sure that the data is properly shuffled
+
+
 
 ```python
 from sklearn.model_selection import train_test_split
@@ -228,6 +231,8 @@ def slide_window(img, x_start_stop=[None, None], y_start_stop=[None, None],
             window_list.append(((x_start,y_start),(x1,y1)))
     return window_list 
 ```
+
+
 ```python
 # function that returns the refined Windows
 # From Refined Windows we mean that the windows where the classifier predicts the output to be a car
@@ -254,9 +259,23 @@ def DrawCars(image,windows, converColorspace=False):
 
 **The total number of windows I got were 470. Below is the image for coverage of windows, i.e. the area where the code will be searching for windows**
 
+
+```python
+
+```
+
     Total No of windows are  470
-   
-![png](./Writeup_Folder/output_27_2.png)
+    
+
+
+
+
+    <matplotlib.image.AxesImage at 0x1a2b5f47c18>
+
+
+
+
+![png](output_27_2.png)
 
 
 Once I was able to detect the car by using Sliding Window approach. The next I decided to use a heatup to plot the final bounding boxes around the car. I defined a function ```add_heat``` that increments the pixel value of an black image the size of the original image at the location of each detected window which I call as refined Window.
@@ -303,9 +322,23 @@ def draw_labeled_bboxes(img, labels):
     return img
 ```
 
+
+```python
+
+```
+
      Number of Cars found -  1
-  
-![png](./Writeup_Folder/output_34_2.png)
+    
+
+
+
+
+    <matplotlib.text.Text at 0x1a2b3d677f0>
+
+
+
+
+![png](output_34_2.png)
 
 
 **Question 2: Show some examples of test images to demonstrate how your pipeline is working. What did you do to optimize the performance of your classifier?**
@@ -323,7 +356,15 @@ ii) ```PiplineImage``` -> This pipeline is for the processing of test images. He
 Running the pipeline for test images gives the result as follows-:
 
 
-![png](./Writeup_Folder/output_37_1.png)
+```python
+
+```
+
+    Wall time: 8.1 s
+    
+
+
+![png](output_37_1.png)
 
 
 The final implentation worked well as it is clear from the test images. Nearly in all the images the cars were detected with ease. I decided to run the code then on video Pipeline.
@@ -341,7 +382,7 @@ There were a number of false positives that were detected  by the classifier whe
 
 **Answer**:
 
-Here's a [link to my video result](./project_video_output.mp4)
+Here's a [link to my video result](../project_video_output.mp4)
 
 
 #### Question 2- Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -417,9 +458,9 @@ class KeepTrack():
 
 5: **I earlier talked about frame skipping strategy. What I did was to take a random number between 0 and 1, if the value of number taken was less than 0.4 then I skipped the frame and took the refined windows from the previous stored frames. This decreased the processing time of my pipeline as well.** I was able to create a video from 4 hours to 4 minutes using all the methods above.
 
- Here's a [link to the video result](./project_video_output_with_frame_skipping.mp4)
+ Here's a [link to the video result](../project_video_output_with_frame_skipping.mp4)
  
- Here's another [link to the video result](./project_video_output_with_frame_skipping_threshold_20.mp4)
+ Here's another [link to the video result](../project_video_output_with_frame_skipping_threshold_20.mp4)
  
 
 
